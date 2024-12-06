@@ -2,6 +2,15 @@ import os
 import streamlit as st
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
+
+import httpx
+
+with httpx.Client() as client:
+    try:
+        response = client.get("http://httpbin.org/get", timeout=0.001)
+    except httpx.TimeoutException as e:
+        print('gottem')
+        
 llm = OllamaLLM(model="llama3.2:1b")
 
 st.set_page_config(
